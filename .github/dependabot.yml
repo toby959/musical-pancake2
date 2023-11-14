@@ -1,6 +1,31 @@
+#version: 2
+#updates:
+#  - package-ecosystem: "github-actions"
+#    directory: "/"
+#    schedule:
+#      interval: "monthly"
+
+
+# Example configuration file that:             # Archivo de configuración de ejemplo que:
+#  - Has a private registry                    # - Tiene un registro privado
+#  - Ignores lodash dependency                 # - Ignora la dependencia de lodash
+#  - Disables version-updates                  # - Desactiva las actualizaciones de versión 
+
 version: 2
+registries:
+  example:
+    type: npm-registry
+    url: https://toby959/musical-pancake2       # example.com
+    token: ${{secrets.NPM_TOKEN}}
 updates:
-  - package-ecosystem: "github-actions"
-    directory: "/"
+  - package-ecosystem: "npm"
+    directory: "/src/npm-project"
     schedule:
-      interval: "monthly"
+      interval: "daily"
+    ignore:
+      - dependency-name: "lodash"
+        # For Lodash, ignore all updates
+    # Disable version updates for npm dependencies
+    open-pull-requests-limit: 0
+    registries:
+      - example
